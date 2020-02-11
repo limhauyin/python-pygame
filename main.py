@@ -1,4 +1,5 @@
 import pygame 
+import random 
 
 # init game
 pygame.init()
@@ -11,6 +12,8 @@ pygame.display.set_caption("Killer")
 icon = pygame.image.load('fish.png')
 pygame.display.set_icon(icon)
 
+# background 
+background = pygame.image.load('backgroud.jpg')
 
 # player
 playerIMG = pygame.image.load('fisher.png')
@@ -23,10 +26,10 @@ playerY_change = 0
 
 # enemy
 enemyIMG = pygame.image.load('tuna.png')
-enemyX = 370
-enemyY = 180
-enemyX_change = 0 
-enemyY_change = 0 
+enemyX = random.randint(0,800)
+enemyY = random.randint(50,150)
+enemyX_change = 0.3 
+enemyY_change = 40 
 
 
 def player(x,y):
@@ -39,6 +42,8 @@ running = True
 while running : 
     #RGB  
     screen.fill((0,0,0))
+    # back ground 
+    screen.blit(background,(0,0))
     for event in pygame.event.get() : 
         if(event.type == pygame.QUIT) :
             running = False
@@ -58,6 +63,13 @@ while running :
         playerX = 765
     elif(playerX <= 0):
         playerX = 0
+
+    enemyX += enemyX_change
+    if(enemyX >= 765):
+        enemyX_change = -0.3
+        enemyY_change += enemyY_change
+    elif(enemyX <= 0):
+        enemyX_change =0.3
 
     player(playerX,playerY)
     enemy(enemyX, enemyY)
