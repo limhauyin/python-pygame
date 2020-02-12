@@ -9,11 +9,11 @@ screen = pygame.display.set_mode((800,600))
 
 # title and icon 
 pygame.display.set_caption("Killer")
-icon = pygame.image.load('fish.png')
+icon = pygame.image.load('tuna.png')
 pygame.display.set_icon(icon)
 
 # background 
-background = pygame.image.load('backgroud.jpg')
+background = pygame.image.load('wenyibackground.jpeg')
 
 # player
 playerIMG = pygame.image.load('fisher.png')
@@ -25,7 +25,7 @@ playerY_change = 0
 
 
 # enemy
-enemyIMG = pygame.image.load('tuna.png')
+enemyIMG = pygame.image.load('wenyi.jpeg')
 enemyX = random.randint(0,800)
 enemyY = random.randint(40,150)
 enemyX_change = 4
