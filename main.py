@@ -1,6 +1,8 @@
 import pygame 
 import random 
 import math
+from pygame import mixer
+
 # init game
 pygame.init()
 
@@ -14,6 +16,11 @@ pygame.display.set_icon(icon)
 
 # background 
 background = pygame.image.load('wy3.jpg')
+
+
+#music
+mixer.music.load('game.mp3')
+mixer.music.play(-1)
 
 # player
 playerIMG = pygame.image.load('war.png')
@@ -51,6 +58,7 @@ bullet_state = "ready"
 
 score_value = 0 
 font = pygame.font.Font('freesansbold.ttf',20)
+overfont = pygame.font.Font('freesansbold.ttf', 64)
 
 textX = 10 
 textY = 10 
@@ -77,6 +85,14 @@ def isCollision(enemyX,enemyY,bulletX,bulletY):
     else :
         return False
 
+
+def  game_over_text():
+    score= font.render("You are killed by Wen Yi", True, (255,255,255))
+    screen.blit(score,(200,250))
+    sound = mixer.Sound('lose1.wav')
+    sound.play()
+
+
 # game loop
 running = True
 while running : 
@@ -98,6 +114,8 @@ while running :
                 if(bullet_state == "ready"):
                     bulletX = playerX
                     fire_bullet(bulletX,bulletY)
+                    sound = mixer.Sound('gun1.wav')
+                    sound.play()
 
 
         if(event.type == pygame.KEYUP):
@@ -113,6 +131,14 @@ while running :
         playerX = 0
 
     for i in range(enemy_num):
+        #game over 
+        if(enemyY[i] > 440):
+            for j in range(enemy_num):
+                enemyY[j] = 2000
+            game_over_text()
+            break
+
+
         # eneny movment 
         enemyX[i] += enemyX_change[i]
         if(enemyX[i] >= 765):
@@ -126,6 +152,8 @@ while running :
 
         if(collision):
             bulletY = 480
+            dead_sound = mixer.Sound('fart1.wav')
+            dead_sound.play()
             bullet_state = "ready"
             score_value += 1
             enemyX[i] = random.randint(0, 735)
