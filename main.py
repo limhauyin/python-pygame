@@ -42,7 +42,7 @@ for i in range(enemy_num):
 # bullet
 # ready = not moving
 # fire = moving
-bulletIMG = pygame.image.load('swear.png')
+bulletIMG = pygame.image.load('poop.png')
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
