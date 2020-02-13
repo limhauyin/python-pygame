@@ -89,7 +89,7 @@ def isCollision(enemyX,enemyY,bulletX,bulletY):
 def  game_over_text():
     score= font.render("You are killed by Wen Yi", True, (255,255,255))
     screen.blit(score,(200,250))
-    sound = mixer.Sound('lose1.wav')
+    sound = mixer.Sound('lose1.ogg')
     sound.play()
 
 
@@ -114,7 +114,7 @@ while running :
                 if(bullet_state == "ready"):
                     bulletX = playerX
                     fire_bullet(bulletX,bulletY)
-                    sound = mixer.Sound('gun1.wav')
+                    sound = mixer.Sound('gun1.ogg')
                     sound.play()
 
 
@@ -152,7 +152,7 @@ while running :
 
         if(collision):
             bulletY = 480
-            dead_sound = mixer.Sound('fart1.wav')
+            dead_sound = mixer.Sound('fart1.ogg')
             dead_sound.play()
             bullet_state = "ready"
             score_value += 1
