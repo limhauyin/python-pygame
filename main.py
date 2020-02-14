@@ -19,7 +19,7 @@ background = pygame.image.load('wy3.jpg')
 
 
 #music
-mixer.music.load('game.mp3')
+mixer.music.load('game.ogg')
 mixer.music.play(-1)
 
 # player
@@ -37,7 +37,7 @@ enemyX = []
 enemyY = []
 enemyX_change =[]
 enemyY_change = []
-enemy_num = 2 
+enemy_num = 10 
 
 for i in range(enemy_num):
     enemyIMG.append(pygame.image.load('wy6.png'))
@@ -138,7 +138,7 @@ while running :
 
     for i in range(enemy_num):
         #game over 
-        if(enemyY[i] > 100):
+        if(enemyY[i] > 500):
             for j in range(enemy_num):
                 enemyY[j] = 2000
             game_over_text()
