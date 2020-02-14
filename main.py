@@ -42,9 +42,9 @@ enemy_num = 2
 for i in range(enemy_num):
     enemyIMG.append(pygame.image.load('wy6.png'))
     enemyX.append(random.randint(0,735))
-    enemyY.append(random.randint(20,150))
+    enemyY.append(random.randint(20,300))
     enemyX_change.append(4)
-    enemyY_change.append(10) 
+    enemyY_change.append(30) 
 
 # bullet
 # ready = not moving
@@ -59,12 +59,13 @@ bullet_state = "ready"
 score_value = 0 
 font = pygame.font.Font('freesansbold.ttf',20)
 overfont = pygame.font.Font('freesansbold.ttf', 64)
+game_state = "start"
 
 textX = 10 
 textY = 10 
 
 def show_score(x,y):
-    score= font.render(str(score_value) + " Wen Yi is Killed !", True, (0,0,0))
+    score= font.render(str(score_value) + " Wen Yi is Killed !", True, (255,0,0))
     screen.blit(score,(x,y))
 
 def player(x,y):
@@ -76,7 +77,7 @@ def enemy(x,y,i):
 def fire_bullet(x,y):
     global bullet_state 
     bullet_state = "fire"
-    screen.blit(bulletIMG,(x+15,y))
+    screen.blit(bulletIMG,(x,y))
 
 def isCollision(enemyX,enemyY,bulletX,bulletY):
     distance = math.sqrt((math.pow(enemyX - bulletX,2)) + (math.pow(enemyY- bulletY,2)))
@@ -87,9 +88,11 @@ def isCollision(enemyX,enemyY,bulletX,bulletY):
 
 
 def  game_over_text():
-    score= font.render("You are killed by Wen Yi", True, (255,255,255))
-    screen.blit(score,(200,250))
-    sound = mixer.Sound('lose1.ogg')
+    global game_state 
+    game_state ="over"
+    score= font.render("You are killed by Wen Yi ", True, (255,0,0))
+    screen.blit(score,(300,250))
+    sound = mixer.Sound('lose.ogg')
     sound.play()
 
 
@@ -100,6 +103,7 @@ while running :
     screen.fill((255,255,255))
     # back ground 
     screen.blit(background,(0,0))
+
     for event in pygame.event.get() : 
         if(event.type == pygame.QUIT) :
             running = False
@@ -114,9 +118,11 @@ while running :
                 if(bullet_state == "ready"):
                     bulletX = playerX
                     fire_bullet(bulletX,bulletY)
-                    sound = mixer.Sound('gun1.ogg')
+                    sound = mixer.Sound('shoot.ogg')
                     sound.play()
-
+                if(game_state == "over"):
+                    pygame.mixer.pause()
+        
 
         if(event.type == pygame.KEYUP):
             if(event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT):
@@ -132,7 +138,7 @@ while running :
 
     for i in range(enemy_num):
         #game over 
-        if(enemyY[i] > 440):
+        if(enemyY[i] > 100):
             for j in range(enemy_num):
                 enemyY[j] = 2000
             game_over_text()
@@ -146,18 +152,18 @@ while running :
             enemyY[i] += enemyY_change[i]
         elif(enemyX[i] <= 0):
             enemyX_change[i] = 4
-            enemyY[i] -= enemyY_change[i]
+            enemyY[i] += enemyY_change[i]
         #Collision
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
 
         if(collision):
             bulletY = 480
-            dead_sound = mixer.Sound('fart1.ogg')
+            dead_sound = mixer.Sound('fart.ogg')
             dead_sound.play()
             bullet_state = "ready"
             score_value += 1
             enemyX[i] = random.randint(0, 735)
-            enemyY[i] = random.randint(20, 150)
+            enemyY[i] = random.randint(20, 300)
         
         enemy(enemyX[i], enemyY[i], i)
 
